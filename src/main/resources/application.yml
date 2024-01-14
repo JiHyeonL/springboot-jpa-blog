@@ -1,0 +1,51 @@
+# localhost:8080(기본) -> localhost:8000/blog 로 바뀜
+server:
+  port: 8000
+  servlet:
+    context-path: /blog
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  devtools:
+    remote:
+      restart:
+        enabled: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  mvc:
+#    view:
+#      prefix: /WEB-INF/views/
+#      suffix: .jsp
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      # ddl-auto: create -> 애플리케이션 시작될 때마다 데이터베이스 재생성. update? 엔티티 클래스에 변경이 있을 때만 데이터베이스에 변경사항 반영
+      ddl-auto: update
+      naming:
+        # 엔티티 클래스의 이름을 데이터베이스 테이블 이름으로 매칭한다.
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      # id 생성전략을 이전 버전을 사용하겠다
+      use-new-id-generator-mappings: false
+    # show-sql: true는 Hibernate가 실행하는 SQL 쿼리를 콘솔에 출력하게 한다.
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+
