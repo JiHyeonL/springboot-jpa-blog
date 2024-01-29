@@ -4,6 +4,7 @@ import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,13 +21,23 @@ public class DummyControllerTest {
     @Autowired  // 의존성 주입(DI)
     private UserRepository userRepository;
 
+    @DeleteMapping("/dummy/user/{id}")
+    public String delete(@PathVariable("id") int id) {
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            return "삭제에 실패하였습니다. 해당 id는 DB에 없습니다.";
+        }
+
+        return "삭제되었습니다. id:" + id;
+    }
     // save 함수는 id를 전달하지 않으면 insert를 해주고
     // id를 전달하면 해당 id에 대한 데이터가 있을 경우 update 하고
     // 해당 id에 대한 데이터가 없을 경우 insert를 한다.
     // email, password 받아야 함
     @PutMapping("/dummy/user/{id}")
-    public User updateUser(@PathVariable int id, @RequestBody User requsetUser) {   // json 데이터를 요청 -> java 오브젝트(MessageConverter의 jackson라이브러리가 변환해서 받아줌)
-        System.out.println("id : "+ id);
+    public User updateUser(@PathVariable("id") int id, @RequestBody User requsetUser) {   // json 데이터를 요청 -> java 오브젝트(MessageConverter의 jackson라이브러리가 변환해서 받아줌)
+        System.out.println("id : " + id);
         System.out.println("password : " + requsetUser.getPassword());
         System.out.println("email : " + requsetUser.getEmail());
 
@@ -36,11 +47,14 @@ public class DummyControllerTest {
         // 이런 방식으로 user 정보를 수정하면 null이 생기지 않는다.
         user.setPassword(requsetUser.getPassword());
         user.setEmail(requsetUser.getEmail());
+//        user.setId(requsetUser.getId());
+//        user.setUsername(requsetUser.getUsername());
 
 //        requsetUser.setId(id);
 //        requsetUser.setUsername("sdfasdgawgasd");   // 위 id의 이름을 이것으로 바꿔줌. 이 방법은 null이 생긴다
-        userRepository.save(requsetUser);   // save는 id가 있으면 update하고, 없으면 insert한다.
-        return null;
+//        userRepository.save(requsetUser);   // save는 id가 있으면 update하고, 없으면 insert한다.
+        // 더티 체킹 -> 변경 감지(db와 jpa에서 더티체킹의 의미가 다름)
+        return user;
     }
 
     // http://localhost:8000/blog/dummy/user
