@@ -66,12 +66,12 @@ public class DummyControllerTest {
     // 한 페이지당 두 건의 데이터를 리턴
     // 2개 데이터를 id 기준으로 내림차순으로 보여줌
     @GetMapping("/dummy/user")  // size = 2라는 뜻은 한 페이지당 데이터 2개를 보여준다는 뜻
-    public List<User> pageList(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)Pageable pageable) {
+    public Page<User> pageList(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)Pageable pageable) {
         Page<User> pagingUser = userRepository.findAll(pageable);
 
         // if (pagingUser.isLast()) {} 와 같이 Page는 다양한 메소드 제공한다.
         List<User> users = pagingUser.getContent();
-        return users;
+        return pagingUser;
     }
 
     // {id} 주소로 파라미터를 전달받을 수 있음

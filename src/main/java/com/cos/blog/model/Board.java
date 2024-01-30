@@ -28,8 +28,7 @@ public class Board {
     @Column(columnDefinition = "longtext")
     private String content; // 섬머노트 라이브러리 사용할 것. <html> 태그가 섞여서 디자인됨
 
-    @ColumnDefault("0") // int니까 홑따옴표 없이 사용
-    private int count;
+    private int count;  // 조회수
 
     // fetch = FetchType.EAGER : 유저는 한건밖에 없으니 바로 join해서 가져온다
     @ManyToOne(fetch = FetchType.EAGER)  // 연관관계, Board = many, User = one. 한 명의 유저는 여러개의 개시글을 쓸 수 있다는 뜻.

@@ -3,25 +3,32 @@
 <!-- Thymeleaf include 구문 -->
 <div th:include="layout/header"></div>
 <div class="container">
+<div th:each="board : ${boards.content}">   <!-- BoardController가 보드 데이터 줌 -->
     <div class="card m-2">
         <div class="card-body">
-            <h4 class="card-title">제목 적는 부분</h4>
-            <a href="#" class="btn btn-primary">상세 보기</a>
-        </div>
-    </div>
-    <div class="card m-2">
-        <div class="card-body">
-            <h4 class="card-title">제목 적는 부분</h4>
-            <a href="#" class="btn btn-primary">상세 보기</a>
-        </div>
-    </div>
-    <div class="card m-2">
-        <div class="card-body">
-            <h4 class="card-title">제목 적는 부분</h4>
-            <a href="#" class="btn btn-primary">상세 보기</a>
+            <h4 class="card-title" th:text="${board.title}"></h4> <!-- @Data 어노테이션 사용 했기 때문에 board.title = board.getTitle() -->
+            <a th:href="@{/board/{id}(id=${board.id})}" class="btn btn-primary">상세 보기</a>
         </div>
     </div>
 </div>
+
+<ul class="pagination justify-content-center">  <!--페이지 버튼 가운데로 조정-->
+    <th:block th:if="${boards.first}">
+        <li class="page-item disabled"><a class="page-link" th:href="@{/?page={page} (page=${boards.number-1})}">Previous</a></li>
+    </th:block>
+    <th:block th:unless="${boards.first}">
+        <li class="page-item"><a class="page-link" th:href="@{/?page={page} (page=${boards.number-1})}">Previous</a></li>
+    </th:block>
+
+    <th:block th:if="${boards.last}">
+        <li class="page-item disabled"><a class="page-link" th:href="@{/?page={page} (page=${boards.number+1})}">Next</a></li>
+    </th:block>
+    <th:block th:unless="${boards.last}">
+        <li class="page-item"><a class="page-link" th:href="@{/?page={page} (page=${boards.number+1})}">Next</a></li>
+    </th:block>
+</ul>
+</div>
+
 
 <!-- Thymeleaf include 구문 -->
 <div th:include="layout/footer"></div>
