@@ -41,7 +41,7 @@ spring:
       # id 생성전략을 이전 버전을 사용하겠다
       use-new-id-generator-mappings: false
     # show-sql: true는 Hibernate가 실행하는 SQL 쿼리를 콘솔에 출력하게 한다.
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true

@@ -30,4 +30,14 @@ public class BoardApiController {
         System.out.println("삭제 완료");
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
+
+    @PutMapping("/api/board/{id}")  // 주소가 글 삭제하기와 같지만 메소드 다르니까 ㄱㅊ
+    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board) {
+        System.out.println("BoardApiController update id: " + id);
+        System.out.println("BoardApiController update title: " + board.getTitle());
+        System.out.println("BoardApiController update content: " + board.getContent());
+
+        boardService.글수정하기(id, board);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
 }

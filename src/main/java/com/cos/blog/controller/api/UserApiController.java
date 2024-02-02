@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,12 @@ public class UserApiController {
 
         user.setRole(RoleType.USER);    // 이건 응답에서 온 데이터로 설정하는게 아니라 직접 설정해 줘야 하기 때문에 따로 코드 작성.
         userService.회원가입(user);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @PutMapping("/user")    // json 데이터 받으려면 @RequestBody 붙여야 함.
+    public ResponseDto<Integer> update(@RequestBody User user) {    // key=value, x-www-form-urlencoded
+        userService.회원수정(user);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }

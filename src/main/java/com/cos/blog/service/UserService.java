@@ -28,4 +28,24 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void 회원수정(User user) {
+        // 수정시에는 영속성 컨텍스트에 User 오브젝트를 영속화시키고, 영속화된 User 오브젝트를 수정한다.
+        // select를 해서 user 오브젝트를 DB로부터 가져오는 이유는 영속화를 하기 위해서!
+        // 영속화된 오브젝트를 변경하면 자동으로 DB에 update문을 날려준다.
+        User persistance = userRepository.findById(user.getId()).orElseThrow(() -> {
+            System.out.println(user.getUsername());
+            return new IllegalArgumentException("회원 찾기 실패");    // 유저 못찾을 수도 있으니까.
+        });
+
+        String rawPassword = user.getPassword();
+        String encPassword = encoder.encode(rawPassword);   // 비밀번호 해쉬
+        persistance.setPassword(encPassword);
+        persistance.setEmail(user.getEmail());
+        // 회원수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 된다.
+        // commit이 자동으로 된다는 뜻은 영속화된 persistance 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려줌.
+
+
+    }
+
 }

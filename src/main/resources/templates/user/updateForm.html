@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Thymeleaf include 구문 -->
+<div th:include="/layout/header"></div>
+<div class="container">
+    <form>
+        <input type="hidden" id="id" th:value="${#authentication.principal.user.id}"/>
+        <!-- JavaScript 코드 추가 -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            // th:value로 설정된 값을 가져와서 콘솔에 출력
+            var userId = /*[[${#authentication.principal.user.id}]]*/ '';
+            console.log('User ID:', userId);
+            /*]]>*/
+        </script>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" th:value="${#authentication.principal.user.username}" class="form-control" placeholder="Enter username" id="username" readonly>
+            <!-- JavaScript 코드 추가 -->
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                // th:value로 설정된 값을 가져와서 콘솔에 출력
+                var username = /*[[${#authentication.principal.user.username}]]*/ '';
+                console.log('User ID:', username);
+                /*]]>*/
+            </script>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" placeholder="Enter password" id="password">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" th:value="${#authentication.principal.user.email}" class="form-control" placeholder="Enter email" id="email">
+            <!-- JavaScript 코드 추가 -->
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                // th:value로 설정된 값을 가져와서 콘솔에 출력
+                var email = /*[[${#authentication.principal.user.email}]]*/ '';
+                console.log('User ID:', email);
+                /*]]>*/
+            </script>
+        </div>
+    </form>
+    <button id="btn-update" class="btn btn-primary">회원 수정 완료</button>
+</div>
+
+<script src="/js/user.js"></script>
+
+<!-- Thymeleaf include 구문 -->
+<div th:include="/layout/footer"></div>
+
