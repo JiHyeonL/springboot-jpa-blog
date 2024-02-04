@@ -1,5 +1,6 @@
 package com.cos.blog.config;
 
+import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.config.auth.PrincipalDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,11 @@ import org.springframework.security.web.SecurityFilterChain;
 // 빈 등록 = 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
 @Configuration  // 스프링에 빈이 등록되게 함(Ioc로 관리됨)
 public class SecurityConfig{
+    @Bean
+    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     @Bean   // IoC 된다.
     public BCryptPasswordEncoder encodePWD() {
         return new BCryptPasswordEncoder();

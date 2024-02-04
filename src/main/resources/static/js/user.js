@@ -38,14 +38,15 @@ let index = {
     },
 
     update: function() {
-        alert('user의 update함수 호출됨');
+//        alert('user의 update함수 호출됨');
         let data = {    // username은 수정x
             id: $("#id").val(),
-            password: $("#password").val(),
+            username: $("#username").val(), // 이렇게 정의해줘야 @RequestBody User user로 받을 때 값이 넘어간다.
+            password: $("#password").val(), // let data에 정의해주지 않으면 null 값이 넘어간다.
             email: $("#email").val()
         };
 
-         console.log(data)
+//         console.log(data)
 
         // ajax 호출시 default가 비동기 호출
         $.ajax({
