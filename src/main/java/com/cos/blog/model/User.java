@@ -39,6 +39,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleType role;  // Enum 사용: ADMIN, USER
 
+    private String oauth;   // 카카오 로그인 - 구글 로그인 등 로그인 방법에 따라 구분
+
     @CreationTimestamp  // 시간이 자동 입력됨
     private Timestamp createDate;
 }

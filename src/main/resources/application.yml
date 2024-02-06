@@ -50,4 +50,8 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
+# 실제 서비스에서는 절대 노출하면 안된다.(모든 /auth 노출됨)
+cos:
+  key: cos1234
+
 
