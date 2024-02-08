@@ -1,6 +1,8 @@
 package com.cos.blog.model;
 
 import javax.persistence.*;
+
+import com.cos.blog.dto.ReplySaveRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,4 +35,23 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    @Override
+    public String toString() {
+        return "Reply{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", board=" + board +
+                ", user=" + user +
+                ", createDate=" + createDate +
+                '}';
+    }
+// BoardService 댓글쓰기에서 이 메소드를 이용하면
+    // Reply reply = new Reply();
+    // reply.update(user, board, replySaveRequestDto.getContent()); 로 한번에 업데이트 할 수 있다.
+//    public void update(User user, Board board, String content) {
+//        setUser(user);
+//        setBoard(board);
+//        setContent(content);
+//    }
 }

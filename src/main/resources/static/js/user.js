@@ -18,7 +18,6 @@ let index = {
             email: $("#email").val(),
         };
 
-        // console.log(data)
 
         // ajax 호출시 default가 비동기 호출
         $.ajax({
@@ -29,8 +28,11 @@ let index = {
             contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MIME)
             dataType: "json"    // 요쳥을 서버로해서 응답이 왔을 때 기본적으로 버퍼로 오기 때문에 문자열이다. 생긴게 JSON이라면 JS 오브젝트로 변환해준다.
         }).done(function(response){
-            alert("회원가입이 완료되었습니다.");
-            //console.log(response);
+            if (response.status === 500) {
+                alert("회원가입에 실패하였습니다.");
+            } else {
+                alert("회원가입이 완료되었습니다.");
+            }
             location.href = "/";  // 회원가입 완료 후 이동할 위치
         }).fail(function(error){
             alert(JSON.stringify(error));

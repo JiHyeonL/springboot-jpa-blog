@@ -39,8 +39,8 @@ public class Board {
 
     // 하나의 게시글에 달릴 수 있는 댓글은 여러개가 가능하기 때문에 리스트를 사용해 댓글 전체를 저장할 수 있게 함
     // fetch = FetchType.LAZY: 가져 올게 여러 건 이니까 필요 하면 들고 오고, 필요 하지 않으면 안 들고 온다.(EX: 댓글 펼치기 버튼을 눌러야 댓글이 보임)
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)  // mappedBy를 사용해서 연관관계의 주인이 아니다(난 FK가 아니다), DB에 컬럼을 만들지 말라고 설정한다.
-    @JsonIgnoreProperties({"board"})    // 무한참조 해결 위해 사용
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)  // mappedBy를 사용해서 연관관계의 주인이 아니다(난 FK가 아니다), DB에 컬럼을 만들지 말라고 설정한다.
+    @JsonIgnoreProperties({"board"})    // 무한참조 해결 위해 사용. CascadeType.REMOVE = 보드(게시물)을 삭제할 때 그 보드에 있는 reply도 지운다.
     @OrderBy("id desc")
     private List<Reply> replies;      // 그럼 FK는 누구? Reply 테이블의 board. reply는 join문을 통해 단순히 값을 얻을 때 사용할 것이다.
 
