@@ -49,5 +49,12 @@ public class BoardApiController {
     public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto) {
         boardService.댓글쓰기(replySaveRequestDto); // 유저 오브젝트 전체, 보드 id, 댓글 id 날림
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    } //
+    }
+
+    @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
+    public ResponseDto<Integer> replyDelete(@PathVariable int replyId) {
+        boardService.댓글삭제(replyId);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
 }
